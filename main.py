@@ -48,7 +48,11 @@ def x_trends():
     # Sanitize region
     region = VALID_REGIONS.get(region.lower(), "worldwide")
 
-    url = f"https://trends24.in/{region}/"
+   # Trends24 URL — worldwide is root, others have country path
+    if region == 'worldwide':
+        url = 'https://trends24.in/'
+    else:
+        url = f'https://trends24.in/{region}/'
 
     try:
         resp = requests.get(url, headers=HEADERS, timeout=10)
