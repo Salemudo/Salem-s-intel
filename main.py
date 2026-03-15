@@ -6,8 +6,14 @@ from datetime import datetime
 import re
 
 app = Flask(__name__)
-CORS(app)  # Allow all origins so your dashboard can call this
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=False)
 
+@app.after_request
+def add_cors_headers(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
